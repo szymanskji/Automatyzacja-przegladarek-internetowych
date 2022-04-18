@@ -20,7 +20,10 @@ class BookingFilter:
 
     def najniższa_cena(self):
         try:
-            self.driver.find_element(By.CSS_SELECTOR, 'li[data-id="price"]').click()
+            element = self.driver.find_element(By.CSS_SELECTOR, 'li[data-id="price"]')
+            self.driver.execute_script("arguments[0].click()", element)
         except selenium.common.exceptions.NoSuchElementException:
-            self.driver.find_element(By.CSS_SELECTOR, 'button[data-testid="sorters-dropdown-trigger"]')
-            self.driver.find_element(By.CSS_SELECTOR, 'button[data-id="price"]').click()
+            element = self.driver.find_element(By.CSS_SELECTOR, 'button[data-testid="sorters-dropdown-trigger"]')
+            self.driver.execute_script("arguments[0].click()", element)
+            element =self.driver.find_element(By.CSS_SELECTOR, 'button[data-id="price"]')
+            self.driver.execute_script("arguments[0].click()", element)
