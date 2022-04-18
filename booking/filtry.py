@@ -1,13 +1,26 @@
+import selenium
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
-from typing import List
+
+
 class BookingFilter:
-    def __init__(self, driver:WebDriver):
+    def __init__(self, driver: WebDriver):
         self.driver = driver
 
-    def gwiazdki(self, ilosc):
-        filter_gwiazdki_box = self.driver.find_element(By.ID,'filter_class')
-        filter_gwiazdki = filter_gwiazdki_box.find_element_by_css_selector('*')
+    def ilosc_gwiazdek(self, *gwiazdki):
+        gw_box = self.driver.find_element_by_xpath('//*[@id="searchboxInc"]/div[1]/div/div/div[1]/div[6]')
+        gw = gw_box.find_elements(By.CSS_SELECTOR, '*')
 
-        #for pom in filter_gwiazdki:
-           # if str(pom.get_attribute('innerHTML')).strip() == f'{ilosc} '
+        for gwiazdka in gwiazdki:
+            for _ in gw:
+                if str(_.get_attribute('innerHTML')).strip() == f'{gwiazdka} gwiazdki' \
+                        or str(_.get_attribute('innerHTML')).strip() == f'{gwiazdka} gwiazdek' \
+                        or str(_.get_attribute('innerHTML')).strip() == f'{gwiazdka} gwiazdka':
+                    self.driver.execute_script("arguments[0].click()", _)
+
+    def najniższa_cena(self):
+        try:
+            self.driver.find_element(By.CSS_SELECTOR, 'li[data-id="price"]').click()
+        except selenium.common.exceptions.NoSuchElementException:
+            self.driver.find_element(By.CSS_SELECTOR, 'button[data-testid="sorters-dropdown-trigger"]')
+            self.driver.find_element(By.CSS_SELECTOR, 'button[data-id="price"]').click()
