@@ -44,7 +44,7 @@ class Booking(webdriver.Chrome):
         self.execute_script("arguments[0].click()", element)
 
     def miejsce(self, miasto):
-        wyszukiwarka = WebDriverWait(self, 5).until(ec.element_to_be_clickable((By.ID, "ss")))
+        wyszukiwarka = self.find_element(By.ID, "ss")
         wyszukiwarka.clear()
         wyszukiwarka.send_keys(miasto)
         element = WebDriverWait(self, 5).until(ec.element_to_be_clickable((By.CSS_SELECTOR,

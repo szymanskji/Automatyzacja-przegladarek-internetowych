@@ -14,18 +14,15 @@ class BookingRaport:
         wyniki = []
         licznik = 1
         for okienko in self.okienka:
-            nazwa = okienko.find_element(By.CSS_SELECTOR, 'div[data-testid="title"]').get_attribute('innerHTML')
-            nazwa = nazwa.replace("&amp;", "&")
-            temp = str(licznik)
+            nazwa = okienko.find_element(By.CSS_SELECTOR, 'div[data-testid="title"]').text
             try:
-                ocena = okienko.find_element(By.XPATH, "(//div[@class='b5cd09854e d10a6220b4'])[" + temp + "]").text
+                ocena = okienko.find_element(By.XPATH, f"(//div[@class='b5cd09854e d10a6220b4'])[{licznik}]").text
             except:
                 break
-            cena = okienko.find_element(By.CSS_SELECTOR, 'span.fcab3ed991.bd73d13072').get_attribute('innerHTML')
-            cena = cena.replace(" ", "").replace("&nbsp;", " ")
-            odleglosc = okienko.find_element(By.CSS_SELECTOR, 'span[data-testid="distance"]').get_attribute('innerHTML')
+            cena = okienko.find_element(By.CSS_SELECTOR, 'span.fcab3ed991.bd73d13072').text
+            odleglosc = okienko.find_element(By.CSS_SELECTOR, 'span[data-testid="distance"]').text
             wyniki.append(
                 [nazwa, cena, ocena, odleglosc]
             )
-            licznik = licznik +1
+            licznik += 1
         return wyniki
