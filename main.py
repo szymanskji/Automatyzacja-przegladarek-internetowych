@@ -1,3 +1,5 @@
+from time import sleep
+
 from booking.booking import Booking
 
 with Booking() as bot:

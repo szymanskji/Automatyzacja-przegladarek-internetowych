@@ -3,31 +3,24 @@ from selenium.webdriver.remote.webelement import WebElement
 
 
 class BookingRaport:
-    def __init__(self, okienko:WebElement):
-        self.okienko = okienko
-        self.deal_boxes = self.pull_deal_boxes()
+    def __init__(self, zbior: WebElement):
+        self.zbior_okienek = zbior
+        self.okienka = self.wybor_okienka()
 
-    def pull_deal_boxes(self):
-        return self.okienko.find_elements(By.CSS_SELECTOR,
-            'div[data-testid="property-card"]'
-        )
+    def wybor_okienka(self):
+        return self.zbior_okienek.find_elements(By.CSS_SELECTOR, 'div[data-testid="property-card"]')
 
-    def pull_titles(self):
+    def pobierz_hotele(self):
         wyniki = []
-        for deal_box in self.deal_boxes:
-            nazwa = deal_box.find_element(By.CSS_SELECTOR,
-                'div[data-testid="title"]').get_attribute('innerHTML').strip()
+        for okienko in self.okienka:
+            nazwa = okienko.find_element(By.CSS_SELECTOR, 'div[data-testid="title"]').get_attribute('innerHTML')
             nazwa = nazwa.replace("&amp;", "&")
-            ocena = deal_box.find_element(By.CSS_SELECTOR,
-                'div.b5cd09854e.d10a6220b4').get_attribute('innerHTML').strip()
-            cena = deal_box.find_element(By.CSS_SELECTOR,
-                'span.fcab3ed991.bd73d13072').get_attribute('innerHTML').strip()
-            cena = cena.replace(" ","").replace("&nbsp;"," ")
-            odleglosc = deal_box.find_element(By.CSS_SELECTOR,
-                'span[data-testid="distance"]').get_attribute('innerHTML').strip()
-
+            ocena ="x"
+            #ocena = okienko.find_element(By.CSS_SELECTOR, 'div.b5cd09854e.d10a6220b4').get_attribute('innerHTML')
+            cena = okienko.find_element(By.CSS_SELECTOR, 'span.fcab3ed991.bd73d13072').get_attribute('innerHTML')
+            cena = cena.replace(" ", "").replace("&nbsp;", " ")
+            odleglosc = okienko.find_element(By.CSS_SELECTOR, 'span[data-testid="distance"]').get_attribute('innerHTML')
             wyniki.append(
                 [nazwa, cena, ocena, odleglosc]
             )
-
         return wyniki
