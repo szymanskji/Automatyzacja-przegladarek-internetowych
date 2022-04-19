@@ -23,8 +23,8 @@ class BookingRaport:
             cena = okienko.find_element(By.CSS_SELECTOR, 'span.fcab3ed991.bd73d13072').text
             odleglosc = okienko.find_element(By.CSS_SELECTOR, 'span[data-testid="distance"]').text
             strona = "booking.com"
-            link = okienko.find_element(By.CSS_SELECTOR, 'a[data-testid="title-link"]').get_attribute('href')
-            link = pyshorteners.Shortener().tinyurl.short(link)
+            linkv1 = okienko.find_element(By.CSS_SELECTOR, 'a[data-testid="title-link"]').get_attribute('href')
+            link = pyshorteners.Shortener().tinyurl.short(linkv1)
             wyniki.append(
                 [nazwa, cena, ocena, odleglosc, strona, link]
             )

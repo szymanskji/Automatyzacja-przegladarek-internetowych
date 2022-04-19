@@ -7,16 +7,14 @@ class BookingFilter:
     def __init__(self, driver: WebDriver):
         self.driver = driver
 
-    def ilosc_gwiazdek(self, *gwiazdki):
+    def ilosc_gwiazdek(self, gwiazdki):
         gw_box = self.driver.find_element(By.XPATH, '//*[@id="searchboxInc"]/div[1]/div/div/div[1]/div[6]')
         gw = gw_box.find_elements(By.CSS_SELECTOR, '*')
-
         for gwiazdka in gwiazdki:
-            for _ in gw:
-                if str(_.get_attribute('innerHTML')).strip() == f'{gwiazdka} gwiazdki' \
-                        or str(_.get_attribute('innerHTML')).strip() == f'{gwiazdka} gwiazdek' \
-                        or str(_.get_attribute('innerHTML')).strip() == f'{gwiazdka} gwiazdka':
-                    self.driver.execute_script("arguments[0].click()", _)
+            for temp in gw:
+                if str(temp.get_attribute('name')) == f'class={gwiazdka}':
+                    self.driver.execute_script("arguments[0].click()", temp)
+                    break
 
     def najnizsza_cena(self):
         try:

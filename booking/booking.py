@@ -2,14 +2,13 @@ import os
 
 import selenium
 from fake_useragent import UserAgent
+from prettytable import PrettyTable
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as ec
-from selenium.webdriver.support.ui import WebDriverWait
+
 from booking.filtry import BookingFilter
 from booking.raport import BookingRaport
-from prettytable import PrettyTable
 
 
 class Booking(webdriver.Chrome):
@@ -37,9 +36,10 @@ class Booking(webdriver.Chrome):
         self.get("https://www.booking.com/index.pl.html")
 
     def waluta(self, wal):
-        self.find_element(By.CSS_SELECTOR,
-                          'button[data-modal-header-async-type="currencyDesktop"]'
-                          ).click()
+        element = self.find_element(By.CSS_SELECTOR,
+                                    'button[data-modal-header-async-type="currencyDesktop"]'
+                                    )
+        self.execute_script("arguments[0].click()", element)
         element = self.find_element(By.CSS_SELECTOR,
                                     f'a[data-modal-header-async-url-param*="selected_currency={wal}"'
                                     )
@@ -49,9 +49,9 @@ class Booking(webdriver.Chrome):
         wyszukiwarka = self.find_element(By.ID, "ss")
         wyszukiwarka.clear()
         wyszukiwarka.send_keys(miasto)
-        element = WebDriverWait(self, 5).until(ec.element_to_be_clickable((By.CSS_SELECTOR,
-                                                                           'li[data-i="0"]'
-                                                                           )))
+        element = self.find_element(By.CSS_SELECTOR,
+                                    'li[data-i="0"]'
+                                    )
         self.execute_script("arguments[0].click()", element)
 
     def termin(self, przyjazd, odjazd):
@@ -106,15 +106,13 @@ class Booking(webdriver.Chrome):
         element = self.find_element(By.CSS_SELECTOR, 'button[type="submit"]')
         self.execute_script("arguments[0].click()", element)
 
-    def filtry(self, lista):
+    def filtry(self, string):
         filtr = BookingFilter(driver=self)
-        if lista == "":
+        if string == "":
             filtr.najnizsza_cena()
         else:
-            if len(lista) != 1:
-                lista = list(lista.split(" "))
-                lista = [int(i) for i in lista]
-            filtr.ilosc_gwiazdek(lista)
+            krotka = tuple(map(int, string.split(' ')))
+            filtr.ilosc_gwiazdek(krotka)
             filtr.najnizsza_cena()
 
     def raport_hoteli(self):
