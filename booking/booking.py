@@ -36,23 +36,33 @@ class Booking(webdriver.Chrome):
         self.get("https://www.booking.com/index.pl.html")
 
     def waluta(self, wal):
-        element = self.find_element(By.CSS_SELECTOR,
-                                    'button[data-modal-header-async-type="currencyDesktop"]'
-                                    )
-        self.execute_script("arguments[0].click()", element)
-        element = self.find_element(By.CSS_SELECTOR,
-                                    f'a[data-modal-header-async-url-param*="selected_currency={wal}"'
-                                    )
-        self.execute_script("arguments[0].click()", element)
+        while True:
+            element = self.find_element(By.CSS_SELECTOR,
+                                        'button[data-modal-header-async-type="currencyDesktop"]'
+                                        )
+            self.execute_script("arguments[0].click()", element)
+            try:
+                element = self.find_element(By.CSS_SELECTOR,
+                                            f'a[data-modal-header-async-url-param*="selected_currency={wal}"'
+                                            )
+                self.execute_script("arguments[0].click()", element)
+                break
+            except selenium.common.exceptions.NoSuchElementException:
+                wal = input("Wprowadź poprawnie walutę (zł = PLN): ")
 
     def miejsce(self, miasto):
-        wyszukiwarka = self.find_element(By.ID, "ss")
-        wyszukiwarka.clear()
-        wyszukiwarka.send_keys(miasto)
-        element = self.find_element(By.CSS_SELECTOR,
-                                    'li[data-i="0"]'
-                                    )
-        self.execute_script("arguments[0].click()", element)
+        while True:
+            wyszukiwarka = self.find_element(By.ID, "ss")
+            wyszukiwarka.clear()
+            wyszukiwarka.send_keys(miasto)
+            try:
+                element = self.find_element(By.CSS_SELECTOR,
+                                            'li[data-i="0"]'
+                                            )
+                self.execute_script("arguments[0].click()", element)
+                break
+            except selenium.common.exceptions.NoSuchElementException:
+                miasto = input("Nie znaleziono takiego miasta. Możesz spróbować poszukać w innym mieście: ")
 
     def termin(self, przyjazd, odjazd):
         while True:
