@@ -1,4 +1,6 @@
 import os
+
+import selenium
 from fake_useragent import UserAgent
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -53,14 +55,20 @@ class Booking(webdriver.Chrome):
         self.execute_script("arguments[0].click()", element)
 
     def termin(self, przyjazd, odjazd):
-        element = self.find_element(By.CSS_SELECTOR,
-                                    f'td[data-date="{przyjazd}"]'
-                                    )
-        self.execute_script("arguments[0].click()", element)
-        element = self.find_element(By.CSS_SELECTOR,
-                                    f'td[data-date="{odjazd}"]'
-                                    )
-        self.execute_script("arguments[0].click()", element)
+        while True:
+            try:
+                element = self.find_element(By.CSS_SELECTOR,
+                                            f'td[data-date="{przyjazd}"]'
+                                            )
+                self.execute_script("arguments[0].click()", element)
+                element = self.find_element(By.CSS_SELECTOR,
+                                            f'td[data-date="{odjazd}"]'
+                                            )
+                self.execute_script("arguments[0].click()", element)
+                break
+            except selenium.common.exceptions.NoSuchElementException:
+                element = self.find_element(By.XPATH, '//*[@id="frm"]/div[1]/div[2]/div[2]/div/div/div[2]')
+                self.execute_script("arguments[0].click()", element)
 
     def liczba_doroslych(self, ilosc):
         element = self.find_element(By.ID, 'xp__guests__toggle')
@@ -98,16 +106,22 @@ class Booking(webdriver.Chrome):
         element = self.find_element(By.CSS_SELECTOR, 'button[type="submit"]')
         self.execute_script("arguments[0].click()", element)
 
-    def filtry(self):
+    def filtry(self, lista):
         filtr = BookingFilter(driver=self)
-        filtr.ilosc_gwiazdek(4, 5)
-        filtr.najnizsza_cena()
+        if lista == "":
+            filtr.najnizsza_cena()
+        else:
+            if len(lista) != 1:
+                lista = list(lista.split(" "))
+                lista = [int(i) for i in lista]
+            filtr.ilosc_gwiazdek(lista)
+            filtr.najnizsza_cena()
 
     def raport_hoteli(self):
         okienka_hoteli = self.find_element(By.ID, 'search_results_table')
         raport = BookingRaport(okienka_hoteli)
         tabela = PrettyTable(
-            field_names=["NAZWA", "CENA", "OCENA", "ODLEGŁOŚĆ"]
+            field_names=["NAZWA", "CENA", "OCENA", "ODLEGŁOŚĆ", "STRONA", "LINK"]
         )
         tabela.add_rows(raport.pobierz_hotele())
         print(tabela)

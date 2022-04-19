@@ -1,3 +1,4 @@
+import pyshorteners
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 
@@ -21,8 +22,11 @@ class BookingRaport:
                 break
             cena = okienko.find_element(By.CSS_SELECTOR, 'span.fcab3ed991.bd73d13072').text
             odleglosc = okienko.find_element(By.CSS_SELECTOR, 'span[data-testid="distance"]').text
+            strona = "booking.com"
+            link = okienko.find_element(By.CSS_SELECTOR, 'a[data-testid="title-link"]').get_attribute('href')
+            link = pyshorteners.Shortener().tinyurl.short(link)
             wyniki.append(
-                [nazwa, cena, ocena, odleglosc]
+                [nazwa, cena, ocena, odleglosc, strona, link]
             )
             licznik += 1
         return wyniki
