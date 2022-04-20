@@ -71,6 +71,12 @@ class Booking(webdriver.Chrome):
                                             f'td[data-date="{przyjazd}"]'
                                             )
                 self.execute_script("arguments[0].click()", element)
+                break
+            except selenium.common.exceptions.NoSuchElementException:
+                element = self.find_element(By.XPATH, '//*[@id="frm"]/div[1]/div[2]/div[2]/div/div/div[2]')
+                self.execute_script("arguments[0].click()", element)
+        while True:
+            try:
                 element = self.find_element(By.CSS_SELECTOR,
                                             f'td[data-date="{odjazd}"]'
                                             )
