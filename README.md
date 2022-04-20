@@ -16,4 +16,4 @@ https://selenium-python.readthedocs.io/locating-elements.html \
 https://selenium-python.readthedocs.io/index.html \
 https://www.guru99.com/selenium-python.html \
 https://www.guru99.com/xpath-selenium.html \
-https://myskillpoint.com/css-selector-in-selenium-webdriver-with-example/ \
+https://myskillpoint.com/css-selector-in-selenium-webdriver-with-example/ 
