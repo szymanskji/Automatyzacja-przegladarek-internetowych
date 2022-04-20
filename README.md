@@ -13,3 +13,7 @@ https://stackoverflow.com/questions/11908249/debugging-element-is-not-clickable-
 https://www.freecodecamp.org/news/use-selenium-to-create-a-web-scraping-bot/ \
 https://zetcode.com/python/prettytable/ \
 https://selenium-python.readthedocs.io/locating-elements.html
+https://selenium-python.readthedocs.io/index.html
+https://www.guru99.com/selenium-python.html
+https://www.guru99.com/xpath-selenium.html
+https://myskillpoint.com/css-selector-in-selenium-webdriver-with-example/
