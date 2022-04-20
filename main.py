@@ -65,6 +65,7 @@ with Booking() as bot:
                 print("NIEPRAWIDLOWA ILOSC GWIAZDEK (1-5)")
         else:
             bot.filtry(gwiazdki)
+            break
     bot.refresh()
     bot.raport_hoteli()
     bot.teardown = True
