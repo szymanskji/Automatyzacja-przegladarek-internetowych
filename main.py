@@ -1,10 +1,7 @@
 import datetime
 from multiprocessing import freeze_support
-from time import sleep
-
 import undetected_chromedriver as uc
 from selenium.webdriver.chrome.options import Options
-
 from booking.booking import Booking
 from fake_useragent import UserAgent
 

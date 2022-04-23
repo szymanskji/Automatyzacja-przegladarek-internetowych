@@ -1,10 +1,6 @@
-from time import sleep
-
 import selenium
 from prettytable import PrettyTable
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as ec
 from booking.filtry import BookingFilter
 from booking.raport import BookingRaport
 
@@ -19,13 +15,13 @@ class Booking:
     def waluta(self, wal):
         while True:
             element = self.driver.find_element(By.CSS_SELECTOR,
-                                        'button[data-modal-header-async-type="currencyDesktop"]'
-                                        )
+                                               'button[data-modal-header-async-type="currencyDesktop"]'
+                                               )
             self.driver.execute_script("arguments[0].click()", element)
             try:
                 element = self.driver.find_element(By.CSS_SELECTOR,
-                                            f'a[data-modal-header-async-url-param*="selected_currency={wal}"'
-                                            )
+                                                   f'a[data-modal-header-async-url-param*="selected_currency={wal}"'
+                                                   )
                 self.driver.execute_script("arguments[0].click()", element)
                 break
             except selenium.common.exceptions.NoSuchElementException:
@@ -38,8 +34,8 @@ class Booking:
             wyszukiwarka.send_keys(miasto)
             try:
                 element = self.driver.find_element(By.CSS_SELECTOR,
-                                            'li[data-i="0"]'
-                                            )
+                                                   'li[data-i="0"]'
+                                                   )
                 self.driver.execute_script("arguments[0].click()", element)
                 break
             except selenium.common.exceptions.NoSuchElementException:
@@ -49,18 +45,19 @@ class Booking:
         while True:
             try:
                 element = self.driver.find_element(By.CSS_SELECTOR,
-                                            f'td[data-date="{przyjazd}"]'
-                                            )
+                                                   f'td[data-date="{przyjazd}"]'
+                                                   )
                 self.driver.execute_script("arguments[0].click()", element)
                 break
             except selenium.common.exceptions.NoSuchElementException:
                 element = self.driver.find_element(By.XPATH, '//*[@id="frm"]/div[1]/div[2]/div[2]/div/div/div[2]')
                 self.driver.execute_script("arguments[0].click()", element)
+
         while True:
             try:
                 element = self.driver.find_element(By.CSS_SELECTOR,
-                                            f'td[data-date="{odjazd}"]'
-                                            )
+                                                   f'td[data-date="{odjazd}"]'
+                                                   )
                 self.driver.execute_script("arguments[0].click()", element)
                 break
             except selenium.common.exceptions.NoSuchElementException:
@@ -77,11 +74,11 @@ class Booking:
                 break
             if int(ilosc) < int(d_ilosc):
                 element = self.driver.find_element(By.XPATH, '//*[@id="xp__guests__inputs-container"]/div/div/div['
-                                                      '1]/div/div[2]/button[1]')
+                                                             '1]/div/div[2]/button[1]')
                 self.driver.execute_script("arguments[0].click()", element)
             else:
                 element = self.driver.find_element(By.XPATH, '//*[@id="xp__guests__inputs-container"]/div/div/div['
-                                                      '1]/div/div[2]/button[2]')
+                                                             '1]/div/div[2]/button[2]')
                 self.driver.execute_script("arguments[0].click()", element)
 
     def liczba_pokoi(self, ilosc):
@@ -92,11 +89,11 @@ class Booking:
                 break
             if int(ilosc) < int(d_ilosc):
                 element = self.driver.find_element(By.XPATH, '//*[@id="xp__guests__inputs-container"]/div/div/div['
-                                                      '4]/div/div[2]/button[1]')
+                                                             '4]/div/div[2]/button[1]')
                 self.driver.execute_script("arguments[0].click()", element)
             else:
                 element = self.driver.find_element(By.XPATH, '//*[@id="xp__guests__inputs-container"]/div/div/div['
-                                                      '4]/div/div[2]/button[2]')
+                                                             '4]/div/div[2]/button[2]')
                 self.driver.execute_script("arguments[0].click()", element)
 
     def wyszukiwanie(self):
