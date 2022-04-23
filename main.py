@@ -1,7 +1,25 @@
 import datetime
-from booking.booking import Booking
+from multiprocessing import freeze_support
+from time import sleep
 
-with Booking() as bot:
+import undetected_chromedriver as uc
+from selenium.webdriver.chrome.options import Options
+
+from booking.booking import Booking
+from fake_useragent import UserAgent
+
+if __name__ == '__main__':
+    freeze_support()
+    options = Options()
+    options.add_argument("--headless")
+    ua = UserAgent()
+    user_agent = ua.random
+    options.add_argument(f'user-agent={user_agent}')
+    driver = uc.Chrome(options=options)
+    options.add_argument("--headless")
+    driver.maximize_window()
+    driver.implicitly_wait(15)
+    bot = Booking(driver)
     bot.odpalenie_strony()
     bot.waluta((input("Wprowadź walute: ")).upper())
     bot.miejsce(input("Wprowadź miasto: "))
@@ -59,13 +77,12 @@ with Booking() as bot:
             lista = list(map(int, list(gwiazdki.split(' '))))
             result = [value for value in lista if value in filtr]
             if lista == result:
-               bot.filtry(gwiazdki)
+               bot.filtry(result)
                break
             else:
                 print("NIEPRAWIDLOWA ILOSC GWIAZDEK (1-5)")
         else:
             bot.filtry(gwiazdki)
             break
-    bot.refresh()
+    bot.odswiezenie_strony()
     bot.raport_hoteli()
-    bot.teardown = True
