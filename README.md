@@ -5,7 +5,7 @@
 |Przedmiot| Języki Programowania Wyższego Poziomu 
 |Semestr| 2021/2022   
 # O programie
-Program ma służyć jako porównywanarka cen pobytu w hotelach znalezionych na różnych stronach internetowych. Obecnie jest zaimplementowana jedynie strona https://www.booking.com/. Wyświetlane hotele są posortowane w kolejności od najtańszego. 
+Program ma służyć jako porównywanarka cen pobytu w hotelach Wyświetlane hotele są posortowane w kolejności od najtańszego. 
 # Bibliografia
 Przygotowując materiały na projekt korzystaliśmy z poniższych źródeł:</br>
 https://stackoverflow.com/questions/48454949/how-do-i-create-a-random-user-agent-in-python-selenium \
