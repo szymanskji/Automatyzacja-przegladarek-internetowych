@@ -25,7 +25,7 @@ class Booking:
                 self.driver.execute_script("arguments[0].click()", element)
                 break
             except selenium.common.exceptions.NoSuchElementException:
-                wal = input("Wprowadź poprawnie walutę (zł = PLN): ")
+                wal = input("Wprowadź poprawnie walutę (zł = PLN): ").upper()
 
     def miejsce(self, miasto):
         while True:
